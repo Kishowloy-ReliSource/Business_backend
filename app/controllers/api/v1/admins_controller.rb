@@ -4,13 +4,28 @@ class Api::V1::AdminsController < ApplicationController
   # GET /admins
   def index
     @admins = Admin.all
-
+    puts session[:user_id]
     render json: @admins
   end
 
   # GET /admins/1
   def show
     render json: @admin
+  end
+
+  def login
+    user= Admin.find_by(email: params[:Email])
+    # us=Admin.find_by(pass: params[:Password])
+    puts params[:Email]
+    if user && user.pass == params[:Password]
+      session[:user_id]= user.id
+      puts session[:user_id]
+      puts params[:Email]
+      render json:{bool: true}
+    
+    else
+      render json: {bool: false},status: :unauthorized
+    end
   end
 
   # POST /admins

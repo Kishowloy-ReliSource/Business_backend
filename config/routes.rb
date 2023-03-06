@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
-  resources :dealers
+  resources :lessees
+  resources :bikes
+  
   namespace :api do
     namespace :v1 do
+      post "/admins/login", to: "admins#login"
+      post "/dealers/login", to: "dealers#login"
+      resources :dealers
+      resources :bikes
+      resources :lessees
       resources :admins
+      # post "/dealers", to: "dealers#create"
     end
 
   end

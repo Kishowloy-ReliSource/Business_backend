@@ -1,2 +1,3 @@
-class Admin < ApplicationRecord
+class Admin < ApplicationRecord 
+    
 end
