@@ -15,17 +15,8 @@ class Api::V1::BikesController < ApplicationController
 
   # POST /bikes
   def create
-
-    Bike.create!( brand: params[:bikeName], model: params[:bikeModel], year: params[:bikeYear], mileage: params[:bikeMileage])
-    render json:{text: 'saved'}
-
-    # @bike = Bike.new(bike_params)
-
-    # if @bike.save
-    #   render json: @bike, status: :created, location: @bike
-    # else
-    #   render json: @bike.errors, status: :unprocessable_entity
-    # end
+    result=Bike.create!( brand: params[:formValues][:bikeName], model: params[:formValues][:bikeModel], year: params[:formValues][:bikeYear], mileage: params[:formValues][:bikeMileage])
+    render json:{text: 'saved'}, status: :created
   end
 
   # PATCH/PUT /bikes/1

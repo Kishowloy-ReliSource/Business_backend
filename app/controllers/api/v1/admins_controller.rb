@@ -14,15 +14,12 @@ class Api::V1::AdminsController < ApplicationController
   end
 
   def login
-    user= Admin.find_by(email: params[:Email])
-    # us=Admin.find_by(pass: params[:Password])
-    puts params[:Email]
-    if user && user.pass == params[:Password]
+    puts params[:formValues][:email]
+    user= Admin.find_by(email: params[:formValues][:email])
+    puts params[:formValues][:email]
+    if user && user.pass == params[:formValues][:password]
       session[:user_id]= user.id
-      puts session[:user_id]
-      puts params[:Email]
-      render json:{bool: true}
-    
+      render json:{bool: true}, status: :ok
     else
       render json: {bool: false},status: :unauthorized
     end

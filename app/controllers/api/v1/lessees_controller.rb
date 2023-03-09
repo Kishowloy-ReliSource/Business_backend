@@ -16,20 +16,12 @@ class Api::V1::LesseesController < ApplicationController
   # POST /lessees
   def create
 
-    Lessee.create!(lesseename: params[:lesseeName], lesseeaddress: params[:lesseeAddress], lesseephone: params[:lesseePhone], lesseedob: params[:lesseeDob], lesseemonthlyincome: params[:lesseeMonthlyIncome],
-    colesseename: params[:coLesseeName], colesseeaddress: params[:coLesseeAddress], colessephone: params[:coLesseePhone], colesseedob: params[:coLesseeDob], colesseemonthlyincome: params[:coLesseeMonthlyIncome],
-    downpayment: params[:downPayment], bike_id: params[:bike], approved:0
+    Lessee.create!(lesseename: params[:formValues][:lesseeName], lesseeaddress: params[:formValues][:lesseeAddress], lesseephone: params[:formValues][:lesseePhone], lesseedob: params[:formValues][:lesseeDob], lesseemonthlyincome: params[:formValues][:lesseeMonthlyIncome],
+    colesseename: params[:formValues][:coLesseeName], colesseeaddress: params[:formValues][:coLesseeAddress], colessephone: params[:formValues][:coLesseePhone], colesseedob: params[:formValues][:coLesseeDob], colesseemonthlyincome: params[:formValues][:coLesseeMonthlyIncome],
+    downpayment: params[:formValues][:downPayment], bike_id: params[:formValues][:bike], approved:0
     )
 
-    render json:{text: 'saved'}
-
-    # @lessee = Lessee.new(lessee_params)
-
-    # if @lessee.save
-    #   render json: @lessee, status: :created, location: @lessee
-    # else
-    #   render json: @lessee.errors, status: :unprocessable_entity
-    # end
+    render json:{text: 'saved'},status: :created
   end
 
   # PATCH/PUT /lessees/1
@@ -37,12 +29,7 @@ class Api::V1::LesseesController < ApplicationController
     req= Lessee.find(params[:id])
     req.update!(approved: params[:apv])
     puts req.downpayment
-    render json:{text: 'saved'}
-    # if @lessee.update(lessee_params)
-    #   render json: @lessee
-    # else
-    #   render json: @lessee.errors, status: :unprocessable_entity
-    # end
+    render json:{text: 'saved'},status: :ok
   end
 
   # DELETE /lessees/1

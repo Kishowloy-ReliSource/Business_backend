@@ -4,7 +4,6 @@ class Api::V1::DealersController < ApplicationController
   # GET /dealers
   def index
     @dealers = Dealer.all
-    puts 'hi'
     render json: @dealers
   end
 
@@ -14,11 +13,10 @@ class Api::V1::DealersController < ApplicationController
   end
 
   def login
-    user= Dealer.find_by(email: params[:Email])
-    # us=Admin.find_by(pass: params[:Password])
-    puts params[:Email]
-    if user && user.pass == params[:Password]
-      render json:{bool: true}
+    user= Dealer.find_by(email: params[:formValues][:email])
+    puts params[:formValues][:email]
+    if user && user.pass == params[:formValues][:password]
+      render json:{bool: true}, status: :ok
     
     else
       render json:{bool: false}, status: :unauthorized
@@ -27,15 +25,13 @@ class Api::V1::DealersController < ApplicationController
 
   # POST /dealers
   def create
-    Dealer.create!(email: params[:email], pass: params[:password], status: params[:status], dob: params[:dob], name: params[:name], admin_id: session[:user_id])
-    render json:{text: 'saved'}
-    # @dealer = Dealer.new(dealer_params)
-
-    # if @dealer.save
-    #   render json: @dealer, status: :created, location: @dealer
-    # else
-    #   render json: @dealer.errors, status: :unprocessable_entity
-    # end
+    user = Dealer.where(email: params[:formValues][:email])
+    if user.length()>0
+      render json:{text:'This email exsist '},status: :not_acceptable
+    else
+      Dealer.create!(email: params[:formValues][:email], pass: params[:formValues][:password], status: params[:formValues][:status], dob: params[:formValues][:dob], name: params[:formValues][:name], admin_id: session[:user_id])
+      render json:{text: 'saved'},status: :created
+    end
   end
 
   # PATCH/PUT /dealers/1
