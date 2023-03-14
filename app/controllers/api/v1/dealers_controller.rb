@@ -29,7 +29,7 @@ class Api::V1::DealersController < ApplicationController
     if user.length()>0
       render json:{text:'This email exsist '},status: :not_acceptable
     else
-      Dealer.create!(email: params[:formValues][:email], pass: params[:formValues][:password], status: params[:formValues][:status], dob: params[:formValues][:dob], name: params[:formValues][:name], admin_id: session[:user_id])
+      Dealer.create!(email: params[:formValues][:email], pass: params[:formValues][:password], status: params[:formValues][:status], dob: params[:formValues][:dob], name: params[:formValues][:name],phone:params[:formValues][:phone], admin_id: session[:user_id])
       render json:{text: 'saved'},status: :created
     end
   end
